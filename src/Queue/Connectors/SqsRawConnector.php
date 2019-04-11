@@ -1,13 +1,13 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors;
+namespace MarsBerrys\LaravelSqsRawQueue\Queue\Connectors;
 
 use Aws\Sqs\SqsClient;
 use InvalidArgumentException;
 use Illuminate\Queue\Connectors\SqsConnector;
-use ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue;
+use MarsBerrys\LaravelSqsRawQueue\SqsRawQueue;
 
-class SqsFifoConnector extends SqsConnector
+class SqsRawConnector extends SqsConnector
 {
     /**
      * Establish a queue connection.
@@ -31,7 +31,7 @@ class SqsFifoConnector extends SqsConnector
         $group = array_pull($config, 'group', 'default');
         $deduplicator = array_pull($config, 'deduplicator', 'unique');
 
-        return new SqsFifoQueue(
+        return new SqsRawQueue(
             new SqsClient($config),
             $config['queue'],
             array_get($config, 'prefix', ''),

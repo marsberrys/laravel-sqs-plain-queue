@@ -1,14 +1,14 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue;
+namespace MarsBerrys\LaravelSqsRawQueue;
 
 use Illuminate\Support\ServiceProvider;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Deduplicators\Sqs;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Deduplicators\Unique;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Deduplicators\Content;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors\SqsFifoConnector;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Sqs;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Unique;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Content;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
 
-class LaravelSqsFifoQueueServiceProvider extends ServiceProvider
+class LaravelSqsRawQueueServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -68,8 +68,8 @@ class LaravelSqsFifoQueueServiceProvider extends ServiceProvider
      */
     public function registerConnectors($manager)
     {
-        $manager->extend('sqs-fifo', function () {
-            return new SqsFifoConnector();
+        $manager->extend('sqs-raw', function () {
+            return new SqsRawConnector();
         });
     }
 
@@ -92,7 +92,7 @@ class LaravelSqsFifoQueueServiceProvider extends ServiceProvider
      */
     public function registerUniqueDeduplicator()
     {
-        $this->app->bind('queue.sqs-fifo.deduplicator.unique', Unique::class);
+        $this->app->bind('queue.sqs-raw.deduplicator.unique', Unique::class);
     }
 
     /**
@@ -102,7 +102,7 @@ class LaravelSqsFifoQueueServiceProvider extends ServiceProvider
      */
     public function registerContentDeduplicator()
     {
-        $this->app->bind('queue.sqs-fifo.deduplicator.content', Content::class);
+        $this->app->bind('queue.sqs-raw.deduplicator.content', Content::class);
     }
 
     /**
@@ -112,6 +112,6 @@ class LaravelSqsFifoQueueServiceProvider extends ServiceProvider
      */
     public function registerSqsDeduplicator()
     {
-        $this->app->bind('queue.sqs-fifo.deduplicator.sqs', Sqs::class);
+        $this->app->bind('queue.sqs-raw.deduplicator.sqs', Sqs::class);
     }
 }

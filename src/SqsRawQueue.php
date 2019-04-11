@@ -1,15 +1,15 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue;
+namespace MarsBerrys\LaravelSqsRawQueue;
 
 use LogicException;
 use Aws\Sqs\SqsClient;
 use BadMethodCallException;
 use InvalidArgumentException;
 use Illuminate\Queue\SqsQueue;
-use ShiftOneLabs\LaravelSqsFifoQueue\Contracts\Queue\Deduplicator;
+use MarsBerrys\LaravelSqsRawQueue\Contracts\Queue\Deduplicator;
 
-class SqsFifoQueue extends SqsQueue
+class SqsRawQueue extends SqsQueue
 {
 
     /**
@@ -50,7 +50,7 @@ class SqsFifoQueue extends SqsQueue
      *
      * @param  \Aws\Sqs\SqsClient  $sqs
      *
-     * @return \ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue
+     * @return \MarsBerrys\LaravelSqsRawQueue\SqsRawQueue
      */
     public function setSqs(SqsClient $sqs)
     {
@@ -118,7 +118,7 @@ class SqsFifoQueue extends SqsQueue
             return false;
         }
 
-        if ($this->container->bound($key = 'queue.sqs-fifo.deduplicator.'.$driver)) {
+        if ($this->container->bound($key = 'queue.sqs-raw.deduplicator.'.$driver)) {
             $deduplicator = $this->container->make($key);
 
             if ($deduplicator instanceof Deduplicator) {

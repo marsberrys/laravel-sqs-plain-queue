@@ -1,8 +1,8 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests;
 
-use ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes\Job;
+use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\Job;
 
 class TraitTest extends TestCase
 {

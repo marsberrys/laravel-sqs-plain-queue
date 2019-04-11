@@ -1,15 +1,15 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests;
 
-use ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes\Job;
-use ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes\StandardJob;
+use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\Job;
+use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\StandardJob;
 
 class IntegrationTest extends TestCase
 {
     public function test_push_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-fifo';
+        $connection = 'sqs-raw';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['key']) || empty($config['secret']) || empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {
@@ -23,7 +23,7 @@ class IntegrationTest extends TestCase
 
     public function test_push_standard_job_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-fifo';
+        $connection = 'sqs-raw';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['key']) || empty($config['secret']) || empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {
@@ -37,7 +37,7 @@ class IntegrationTest extends TestCase
 
     public function test_push_to_fifo_queue_works_with_alternate_credentials()
     {
-        $connection = 'sqs-fifo-no-credentials';
+        $connection = 'sqs-raw-no-credentials';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Bus;
+namespace MarsBerrys\LaravelSqsRawQueue\Bus;
 
-trait SqsFifoQueueable
+trait SqsRawQueueable
 {
     /**
      * The message group id the job should be sent to.

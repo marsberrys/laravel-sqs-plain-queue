@@ -1,8 +1,8 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Queue\Deduplicators;
+namespace MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators;
 
-use ShiftOneLabs\LaravelSqsFifoQueue\Contracts\Queue\Deduplicator;
+use MarsBerrys\LaravelSqsRawQueue\Contracts\Queue\Deduplicator;
 
 class Content implements Deduplicator
 {

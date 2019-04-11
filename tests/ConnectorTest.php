@@ -1,27 +1,27 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests;
 
 use InvalidArgumentException;
-use ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors\SqsFifoConnector;
+use MarsBerrys\LaravelSqsRawQueue\SqsRawQueue;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
 
 class ConnectorTest extends TestCase
 {
     public function test_sqs_fifo_driver_returns_sqs_fifo_queue()
     {
-        $config = $this->app['config']['queue.connections.sqs-fifo'];
-        $connector = new SqsFifoConnector();
+        $config = $this->app['config']['queue.connections.sqs-raw'];
+        $connector = new SqsRawConnector();
 
         $connection = $connector->connect($config);
 
-        $this->assertInstanceOf(SqsFifoQueue::class, $connection);
+        $this->assertInstanceOf(SqsRawQueue::class, $connection);
     }
 
     public function test_sqs_fifo_driver_throws_exception_with_invalid_queue_name()
     {
-        $config = ['driver' => 'sqs-fifo', 'queue' => 'test'];
-        $connector = new SqsFifoConnector();
+        $config = ['driver' => 'sqs-raw', 'queue' => 'test'];
+        $connector = new SqsRawConnector();
 
         $this->setExpectedException(InvalidArgumentException::class);
 

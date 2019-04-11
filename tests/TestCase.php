@@ -1,6 +1,6 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests;
 
 use Exception;
 use Dotenv\Dotenv;
@@ -11,7 +11,7 @@ use Illuminate\Queue\SqsQueue;
 use PHPUnit_Framework_TestCase;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Queue\Capsule\Manager as Capsule;
-use ShiftOneLabs\LaravelSqsFifoQueue\LaravelSqsFifoQueueServiceProvider;
+use MarsBerrys\LaravelSqsRawQueue\LaravelSqsRawQueueServiceProvider;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -102,7 +102,7 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function registerServiceProvider()
     {
-        $provider = new LaravelSqsFifoQueueServiceProvider($this->app);
+        $provider = new LaravelSqsRawQueueServiceProvider($this->app);
 
         $provider->register();
     }
@@ -128,7 +128,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $queue->addConnection([
-            'driver' => 'sqs-fifo',
+            'driver' => 'sqs-raw',
             'key' => getenv('SQS_KEY'),
             'secret' => getenv('SQS_SECRET'),
             'prefix' => getenv('SQS_PREFIX'),
@@ -136,16 +136,16 @@ class TestCase extends PHPUnit_Framework_TestCase
             'region' => getenv('SQS_REGION') ?: '',
             'group' => 'default',
             'deduplicator' => 'unique',
-        ], 'sqs-fifo');
+        ], 'sqs-raw');
 
         $queue->addConnection([
-            'driver' => 'sqs-fifo',
+            'driver' => 'sqs-raw',
             'prefix' => getenv('SQS_PREFIX'),
             'queue' => $queueName,
             'region' => getenv('SQS_REGION') ?: '',
             'group' => 'default',
             'deduplicator' => 'unique',
-        ], 'sqs-fifo-no-credentials');
+        ], 'sqs-raw-no-credentials');
     }
 
     /**

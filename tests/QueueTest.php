@@ -1,16 +1,16 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests;
 
 use Aws\Result;
 use Mockery as m;
 use Aws\Sqs\SqsClient;
 use BadMethodCallException;
 use InvalidArgumentException;
-use ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue;
-use ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes\Job;
-use ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes\StandardJob;
-use ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors\SqsFifoConnector;
+use MarsBerrys\LaravelSqsRawQueue\SqsRawQueue;
+use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\Job;
+use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\StandardJob;
+use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
 
 class QueueTest extends TestCase
 {
@@ -30,7 +30,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', $group, '');
+        $queue = new SqsRawQueue($client, '', '', $group, '');
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -53,7 +53,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', '');
+        $queue = new SqsRawQueue($client, '', '', '', '');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -65,7 +65,7 @@ class QueueTest extends TestCase
         $job = new Job();
         $job->withDeduplicator($deduplication);
         $closure = function ($message) use ($deduplication) {
-            $deduplicator = $this->app->make('queue.sqs-fifo.deduplicator.'.$deduplication);
+            $deduplicator = $this->app->make('queue.sqs-raw.deduplicator.'.$deduplication);
             $deduplicationId = $deduplicator->generate($message['MessageBody'], null);
             if (!array_key_exists('MessageDeduplicationId', $message) || $deduplicationId != $message['MessageDeduplicationId']) {
                 return false;
@@ -78,7 +78,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', '');
+        $queue = new SqsRawQueue($client, '', '', '', '');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -99,7 +99,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', 'unique');
+        $queue = new SqsRawQueue($client, '', '', '', 'unique');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -121,7 +121,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', 'unique');
+        $queue = new SqsRawQueue($client, '', '', '', 'unique');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -143,7 +143,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -165,7 +165,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -187,7 +187,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -209,7 +209,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -233,7 +233,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -248,7 +248,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->andReturn($result);
 
-        $queue = new SqsFifoQueue($client, '', '', '', $deduplication);
+        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $this->setExpectedException(InvalidArgumentException::class);
@@ -260,7 +260,7 @@ class QueueTest extends TestCase
     {
         $job = 'test';
         $client = m::mock(SqsClient::class);
-        $queue = new SqsFifoQueue($client, '');
+        $queue = new SqsRawQueue($client, '');
 
         $this->setExpectedException(BadMethodCallException::class);
 
@@ -270,7 +270,7 @@ class QueueTest extends TestCase
     public function test_set_sqs_sets_sqs()
     {
         $client1 = m::mock(SqsClient::class);
-        $queue = new SqsFifoQueue($client1, '');
+        $queue = new SqsRawQueue($client1, '');
 
         $client2 = m::mock(SqsClient::class);
         $queue->setSqs($client2);
@@ -281,7 +281,7 @@ class QueueTest extends TestCase
 
     public function test_push_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-fifo';
+        $connection = 'sqs-raw';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         $result = new Result(['MessageId' => '1234']);
@@ -298,7 +298,7 @@ class QueueTest extends TestCase
 
     public function test_push_standard_job_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-fifo';
+        $connection = 'sqs-raw';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         $result = new Result(['MessageId' => '1234']);
@@ -315,8 +315,8 @@ class QueueTest extends TestCase
 
     protected function bind_custom_deduplicator()
     {
-        $this->app->bind('queue.sqs-fifo.deduplicator.custom', function () {
-            return new \ShiftOneLabs\LaravelSqsFifoQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
+        $this->app->bind('queue.sqs-raw.deduplicator.custom', function () {
+            return new \MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
                 return 'custom';
             });
         });

@@ -1,10 +1,10 @@
 <?php
 
-namespace ShiftOneLabs\LaravelSqsFifoQueue\Tests\Fakes;
+namespace MarsBerrys\LaravelSqsRawQueue\Tests\Fakes;
 
-use ShiftOneLabs\LaravelSqsFifoQueue\Bus\SqsFifoQueueable;
+use MarsBerrys\LaravelSqsRawQueue\Bus\SqsRawQueueable;
 
 class Job
 {
-    use SqsFifoQueueable;
+    use SqsRawQueueable;
 }

@@ -1,18 +1,18 @@
 {
-    "name": "shiftonelabs/laravel-sqs-fifo-queue",
+    "name": "marsberrys/laravel-sqs-raw-queue",
     "description": "Adds a Laravel queue driver for Amazon SQS FIFO queues.",
-    "keywords": ["laravel", "lumen", "illuminate", "queue", "sqs", "fifo", "aws"],
-    "homepage": "https://github.com/shiftonelabs/laravel-sqs-fifo-queue",
+    "keywords": ["laravel", "lumen", "illuminate", "queue", "sqs", "sqs-raw", "aws"],
+    "homepage": "https://github.com/marsberrys/laravel-sqs-raw-queue",
     "license": "MIT",
     "authors": [
         {
-            "name": "Patrick Carlo-Hickman",
-            "email": "patrick@shiftonelabs.com"
+            "name": "Berry Luo",
+            "email": "marsberrys@gmail.com"
         }
     ],
     "support": {
-        "issues": "https://github.com/shiftonelabs/laravel-sqs-fifo-queue/issues",
-        "source": "https://github.com/shiftonelabs/laravel-sqs-fifo-queue"
+        "issues": "https://github.com/marsberrys/laravel-sqs-raw-queue/issues",
+        "source": "https://github.com/marsberrys/laravel-sqs-raw-queue"
     },
     "require": {
         "php": ">=5.5.0",
@@ -30,19 +30,19 @@
     },
     "autoload": {
         "psr-4": {
-            "ShiftOneLabs\\LaravelSqsFifoQueue\\": "src/"
+            "MarsBerrys\\LaravelSqsRawQueue\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ShiftOneLabs\\LaravelSqsFifoQueue\\Tests\\": "tests/"
+            "MarsBerrys\\LaravelSqsRawQueue\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "ShiftOneLabs\\LaravelSqsFifoQueue\\LaravelSqsFifoQueueServiceProvider"
+                "MarsBerrys\\LaravelSqsRawQueue\\LaravelSqsRawQueueServiceProvider"
             ]
         }
     }
