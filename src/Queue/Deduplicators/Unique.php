@@ -1,9 +1,9 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators;
+namespace MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators;
 
 use Ramsey\Uuid\Uuid;
-use MarsBerrys\LaravelSqsRawQueue\Contracts\Queue\Deduplicator;
+use MarsBerrys\LaravelSqsPlainQueue\Contracts\Queue\Deduplicator;
 
 class Unique implements Deduplicator
 {

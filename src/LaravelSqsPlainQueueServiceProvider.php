@@ -1,14 +1,14 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue;
+namespace MarsBerrys\LaravelSqsPlainQueue;
 
 use Illuminate\Support\ServiceProvider;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Sqs;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Unique;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Content;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Sqs;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Unique;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Content;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors\SqsPlainConnector;
 
-class LaravelSqsRawQueueServiceProvider extends ServiceProvider
+class LaravelSqsPlainQueueServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -69,7 +69,7 @@ class LaravelSqsRawQueueServiceProvider extends ServiceProvider
     public function registerConnectors($manager)
     {
         $manager->extend('sqs-raw', function () {
-            return new SqsRawConnector();
+            return new SqsPlainConnector();
         });
     }
 

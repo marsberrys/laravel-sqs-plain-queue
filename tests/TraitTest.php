@@ -1,8 +1,8 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
-use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\Job;
+use MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes\Job;
 
 class TraitTest extends TestCase
 {

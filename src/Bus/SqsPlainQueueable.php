@@ -1,8 +1,8 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Bus;
+namespace MarsBerrys\LaravelSqsPlainQueue\Bus;
 
-trait SqsRawQueueable
+trait SqsPlainQueueable
 {
     /**
      * The message group id the job should be sent to.
@@ -17,6 +17,14 @@ trait SqsRawQueueable
      * @var string
      */
     public $deduplicator;
+
+    /**
+     * The plain data for the job.
+     *
+     * @var string
+     */
+    protected $plainData;
+
 
     /**
      * Set the desired message group id for the job.
@@ -54,5 +62,34 @@ trait SqsRawQueueable
     public function withoutDeduplicator()
     {
         return $this->withDeduplicator('');
+    }
+
+    /**
+     * Get plain data of the job
+     * @param  string|null $key
+     * @param  mixed       $default
+     * @return mixed
+     */
+    public function getPlainData(string $key = null, $default = null)
+    {
+        return array_get($this->plainData, $key, $default);
+    }
+
+    /**
+     * Apply plain data for the job
+     * @param  array|null $data
+     * @return $this
+     */
+    public function applyPlainData(array $data = [])
+    {
+        $this->plainData = $data;
+        if($this->plainData) {
+            foreach ($this->plainData as $key => $value) {
+                if(property_exists($this, $key)) {
+                    $this->$key = $value;
+                }
+            }
+        }
+        return $this;
     }
 }

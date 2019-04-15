@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
 use Exception;
 use Dotenv\Dotenv;
@@ -11,7 +11,7 @@ use Illuminate\Queue\SqsQueue;
 use PHPUnit_Framework_TestCase;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Queue\Capsule\Manager as Capsule;
-use MarsBerrys\LaravelSqsRawQueue\LaravelSqsRawQueueServiceProvider;
+use MarsBerrys\LaravelSqsPlainQueue\LaravelSqsPlainQueueServiceProvider;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -102,7 +102,7 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function registerServiceProvider()
     {
-        $provider = new LaravelSqsRawQueueServiceProvider($this->app);
+        $provider = new LaravelSqsPlainQueueServiceProvider($this->app);
 
         $provider->register();
     }

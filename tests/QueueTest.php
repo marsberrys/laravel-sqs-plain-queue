@@ -1,16 +1,16 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
 use Aws\Result;
 use Mockery as m;
 use Aws\Sqs\SqsClient;
 use BadMethodCallException;
 use InvalidArgumentException;
-use MarsBerrys\LaravelSqsRawQueue\SqsRawQueue;
-use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\Job;
-use MarsBerrys\LaravelSqsRawQueue\Tests\Fakes\StandardJob;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
+use MarsBerrys\LaravelSqsPlainQueue\SqsPlainQueue;
+use MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes\Job;
+use MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes\StandardJob;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors\SqsPlainConnector;
 
 class QueueTest extends TestCase
 {
@@ -30,7 +30,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', $group, '');
+        $queue = new SqsPlainQueue($client, '', '', $group, '');
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -53,7 +53,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', '');
+        $queue = new SqsPlainQueue($client, '', '', '', '');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -78,7 +78,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', '');
+        $queue = new SqsPlainQueue($client, '', '', '', '');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -99,7 +99,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', 'unique');
+        $queue = new SqsPlainQueue($client, '', '', '', 'unique');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -121,7 +121,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', 'unique');
+        $queue = new SqsPlainQueue($client, '', '', '', 'unique');
         $queue->setContainer($this->app);
 
         $queue->push($job);
@@ -143,7 +143,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -165,7 +165,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -187,7 +187,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -209,7 +209,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -233,7 +233,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->with(m::on($closure))->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $queue->pushRaw($job);
@@ -248,7 +248,7 @@ class QueueTest extends TestCase
         $client = m::mock(SqsClient::class);
         $client->shouldReceive('sendMessage')->andReturn($result);
 
-        $queue = new SqsRawQueue($client, '', '', '', $deduplication);
+        $queue = new SqsPlainQueue($client, '', '', '', $deduplication);
         $queue->setContainer($this->app);
 
         $this->setExpectedException(InvalidArgumentException::class);
@@ -260,7 +260,7 @@ class QueueTest extends TestCase
     {
         $job = 'test';
         $client = m::mock(SqsClient::class);
-        $queue = new SqsRawQueue($client, '');
+        $queue = new SqsPlainQueue($client, '');
 
         $this->setExpectedException(BadMethodCallException::class);
 
@@ -270,7 +270,7 @@ class QueueTest extends TestCase
     public function test_set_sqs_sets_sqs()
     {
         $client1 = m::mock(SqsClient::class);
-        $queue = new SqsRawQueue($client1, '');
+        $queue = new SqsPlainQueue($client1, '');
 
         $client2 = m::mock(SqsClient::class);
         $queue->setSqs($client2);
@@ -316,7 +316,7 @@ class QueueTest extends TestCase
     protected function bind_custom_deduplicator()
     {
         $this->app->bind('queue.sqs-raw.deduplicator.custom', function () {
-            return new \MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
+            return new \MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
                 return 'custom';
             });
         });

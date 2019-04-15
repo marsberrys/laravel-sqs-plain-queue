@@ -1,10 +1,10 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests\Fakes;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes;
 
-use MarsBerrys\LaravelSqsRawQueue\Bus\SqsRawQueueable;
+use MarsBerrys\LaravelSqsPlainQueue\Bus\SqsPlainQueueable;
 
 class Job
 {
-    use SqsRawQueueable;
+    use SqsPlainQueueable;
 }

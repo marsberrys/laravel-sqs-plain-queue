@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Contracts\Queue;
+namespace MarsBerrys\LaravelSqsPlainQueue\Contracts\Queue;
 
 interface Deduplicator
 {

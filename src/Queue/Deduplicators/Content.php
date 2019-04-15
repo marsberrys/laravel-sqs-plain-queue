@@ -1,8 +1,8 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators;
+namespace MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators;
 
-use MarsBerrys\LaravelSqsRawQueue\Contracts\Queue\Deduplicator;
+use MarsBerrys\LaravelSqsPlainQueue\Contracts\Queue\Deduplicator;
 
 class Content implements Deduplicator
 {

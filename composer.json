@@ -1,8 +1,8 @@
 {
-    "name": "marsberrys/laravel-sqs-raw-queue",
+    "name": "marsberrys/laravel-sqs-plain-queue",
     "description": "Adds a Laravel queue driver for Amazon SQS FIFO queues.",
     "keywords": ["laravel", "lumen", "illuminate", "queue", "sqs", "sqs-raw", "aws"],
-    "homepage": "https://github.com/marsberrys/laravel-sqs-raw-queue",
+    "homepage": "https://github.com/marsberrys/laravel-sqs-plain-queue",
     "license": "MIT",
     "authors": [
         {
@@ -11,8 +11,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/marsberrys/laravel-sqs-raw-queue/issues",
-        "source": "https://github.com/marsberrys/laravel-sqs-raw-queue"
+        "issues": "https://github.com/marsberrys/laravel-sqs-plain-queue/issues",
+        "source": "https://github.com/marsberrys/laravel-sqs-plain-queue"
     },
     "require": {
         "php": ">=5.5.0",
@@ -30,19 +30,19 @@
     },
     "autoload": {
         "psr-4": {
-            "MarsBerrys\\LaravelSqsRawQueue\\": "src/"
+            "MarsBerrys\\LaravelSqsPlainQueue\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MarsBerrys\\LaravelSqsRawQueue\\Tests\\": "tests/"
+            "MarsBerrys\\LaravelSqsPlainQueue\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "MarsBerrys\\LaravelSqsRawQueue\\LaravelSqsRawQueueServiceProvider"
+                "MarsBerrys\\LaravelSqsPlainQueue\\LaravelSqsPlainQueueServiceProvider"
             ]
         }
     }

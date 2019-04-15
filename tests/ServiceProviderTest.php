@@ -1,13 +1,13 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
 use Illuminate\Container\Container;
 use Illuminate\Queue\QueueServiceProvider;
 use Illuminate\Events\EventServiceProvider;
-use MarsBerrys\LaravelSqsRawQueue\Contracts\Queue\Deduplicator;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Connectors\SqsRawConnector;
-use MarsBerrys\LaravelSqsRawQueue\LaravelSqsRawQueueServiceProvider;
+use MarsBerrys\LaravelSqsPlainQueue\Contracts\Queue\Deduplicator;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors\SqsPlainConnector;
+use MarsBerrys\LaravelSqsPlainQueue\LaravelSqsPlainQueueServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ServiceProviderTest extends TestCase
     {
         $connector = $this->callRestrictedMethod($this->queue->getQueueManager(), 'getConnector', ['sqs-raw']);
 
-        $this->assertInstanceOf(SqsRawConnector::class, $connector);
+        $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }
 
     public function test_unique_deduplicator_is_registered_with_capsule()
@@ -45,7 +45,7 @@ class ServiceProviderTest extends TestCase
 
         $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-raw']);
 
-        $this->assertInstanceOf(SqsRawConnector::class, $connector);
+        $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }
 
     public function test_unique_deduplicator_is_registered_with_laravel_container()
@@ -80,12 +80,12 @@ class ServiceProviderTest extends TestCase
         $container = new Container();
 
         // Only register the queue manager to avoid events dependency.
-        (new LaravelSqsRawQueueServiceProvider($container))->register();
+        (new LaravelSqsPlainQueueServiceProvider($container))->register();
         $this->callRestrictedMethod(new QueueServiceProvider($container), 'registerManager');
 
         $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-raw']);
 
-        $this->assertInstanceOf(SqsRawConnector::class, $connector);
+        $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }
 
     protected function setup_laravel_container()
@@ -94,7 +94,7 @@ class ServiceProviderTest extends TestCase
 
         // Only register the queue manager to avoid events dependency.
         $this->callRestrictedMethod(new QueueServiceProvider($container), 'registerManager');
-        (new LaravelSqsRawQueueServiceProvider($container))->register();
+        (new LaravelSqsPlainQueueServiceProvider($container))->register();
 
         return $container;
     }

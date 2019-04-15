@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests\Fakes;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes;
 
 class StandardJob
 {

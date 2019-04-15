@@ -1,13 +1,14 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Queue\Connectors;
+namespace MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors;
 
 use Aws\Sqs\SqsClient;
 use InvalidArgumentException;
 use Illuminate\Queue\Connectors\SqsConnector;
-use MarsBerrys\LaravelSqsRawQueue\SqsRawQueue;
+use Illuminate\Support\Arr;
+use MarsBerrys\LaravelSqsPlainQueue\SqsPlainQueue;
 
-class SqsRawConnector extends SqsConnector
+class SqsPlainConnector extends SqsConnector
 {
     /**
      * Establish a queue connection.
@@ -20,23 +21,12 @@ class SqsRawConnector extends SqsConnector
     {
         $config = $this->getDefaultConfiguration($config);
 
-        if (!ends_with($config['queue'], '.fifo')) {
-            throw new InvalidArgumentException('FIFO queue name must end in ".fifo"');
+        if ($config['key'] && $config['secret']) {
+            $config['credentials'] = Arr::only($config, ['key', 'secret']);
         }
 
-        if (!empty($config['key']) && !empty($config['secret'])) {
-            $config['credentials'] = array_only($config, ['key', 'secret']);
-        }
-
-        $group = array_pull($config, 'group', 'default');
-        $deduplicator = array_pull($config, 'deduplicator', 'unique');
-
-        return new SqsRawQueue(
-            new SqsClient($config),
-            $config['queue'],
-            array_get($config, 'prefix', ''),
-            $group,
-            $deduplicator
+        return new SqsPlainQueue(
+            new SqsClient($config), $config['queue'], Arr::get($config, 'prefix', ''), $config['consumer']
         );
     }
 

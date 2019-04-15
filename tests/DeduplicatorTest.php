@@ -1,11 +1,11 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsRawQueue\Tests;
+namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Sqs;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Unique;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Content;
-use MarsBerrys\LaravelSqsRawQueue\Queue\Deduplicators\Callback;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Sqs;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Unique;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Content;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Callback;
 
 class DeduplicatorTest extends TestCase
 {
