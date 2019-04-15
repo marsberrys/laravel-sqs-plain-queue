@@ -1,6 +1,6 @@
 <?php
 
-namespace MarsBerrys\LaravelSqsPlainQueue;
+namespace MarsBerrys\LaravelSqsPlainQueue\Queue;
 
 use Aws\Sqs\SqsClient;
 use Illuminate\Queue\SqsQueue;

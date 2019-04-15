@@ -6,7 +6,7 @@ use Aws\Sqs\SqsClient;
 use InvalidArgumentException;
 use Illuminate\Queue\Connectors\SqsConnector;
 use Illuminate\Support\Arr;
-use MarsBerrys\LaravelSqsPlainQueue\SqsPlainQueue;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\SqsPlainQueue;
 
 class SqsPlainConnector extends SqsConnector
 {

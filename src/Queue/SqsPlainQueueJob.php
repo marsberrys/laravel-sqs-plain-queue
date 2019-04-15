@@ -1,5 +1,5 @@
 <?php
-namespace MarsBerrys\LaravelSqsPlainQueue;
+namespace MarsBerrys\LaravelSqsPlainQueue\Queue;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;

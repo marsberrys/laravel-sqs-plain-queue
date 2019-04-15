@@ -7,7 +7,7 @@ use Mockery as m;
 use Aws\Sqs\SqsClient;
 use BadMethodCallException;
 use InvalidArgumentException;
-use MarsBerrys\LaravelSqsPlainQueue\SqsPlainQueue;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\SqsPlainQueue;
 use MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes\Job;
 use MarsBerrys\LaravelSqsPlainQueue\Tests\Fakes\StandardJob;
 use MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors\SqsPlainConnector;

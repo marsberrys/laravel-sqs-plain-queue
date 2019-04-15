@@ -3,7 +3,7 @@
 namespace MarsBerrys\LaravelSqsPlainQueue\Tests;
 
 use InvalidArgumentException;
-use MarsBerrys\LaravelSqsPlainQueue\SqsPlainQueue;
+use MarsBerrys\LaravelSqsPlainQueue\Queue\SqsPlainQueue;
 use MarsBerrys\LaravelSqsPlainQueue\Queue\Connectors\SqsPlainConnector;
 
 class ConnectorTest extends TestCase
