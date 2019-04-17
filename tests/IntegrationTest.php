@@ -9,7 +9,7 @@ class IntegrationTest extends TestCase
 {
     public function test_push_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-raw';
+        $connection = 'sqs-plain';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['key']) || empty($config['secret']) || empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {
@@ -23,7 +23,7 @@ class IntegrationTest extends TestCase
 
     public function test_push_standard_job_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-raw';
+        $connection = 'sqs-plain';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['key']) || empty($config['secret']) || empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {
@@ -37,7 +37,7 @@ class IntegrationTest extends TestCase
 
     public function test_push_to_fifo_queue_works_with_alternate_credentials()
     {
-        $connection = 'sqs-raw-no-credentials';
+        $connection = 'sqs-plain-no-credentials';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         if (empty($config['prefix']) || empty($config['queue']) || empty($config['region'])) {

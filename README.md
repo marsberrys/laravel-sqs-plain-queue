@@ -59,8 +59,8 @@ If using Lumen, create a `config` directory in your project root if you don't al
 
 Now, for both Laravel and Lumen, open `config/queue.php` and add the following entry to the `connections` array.
 
-    'sqs-raw' => [
-        'driver' => 'sqs-raw',
+    'sqs-plain' => [
+        'driver' => 'sqs-plain',
         'key' => env('SQS_KEY'),
         'secret' => env('SQS_SECRET'),
         'prefix' => env('SQS_PREFIX'),
@@ -76,7 +76,7 @@ Example .env file:
     SQS_SECRET=1a23bc/deFgHijKl4mNOp5qrS6TUVwXyz7ABCDef
     SQS_PREFIX=https://sqs.us-east-2.amazonaws.com/123456789012
 
-If you'd like this to be the default connection, also set `QUEUE_DRIVER=sqs-raw` in the `.env` file.
+If you'd like this to be the default connection, also set `QUEUE_DRIVER=sqs-plain` in the `.env` file.
 
 #### Laravel/Lumen 5.0
 
@@ -84,8 +84,8 @@ If using Lumen, create a `config` directory in your project root if you don't al
 
 Now, for both Laravel and Lumen, open `config/queue.php` and add the following entry to the `connections` array:
 
-    'sqs-raw' => [
-        'driver' => 'sqs-raw',
+    'sqs-plain' => [
+        'driver' => 'sqs-plain',
         'key'    => env('SQS_KEY'),
         'secret' => env('SQS_SECRET'),
         'queue'  => env('SQS_PREFIX').'/your-queue-name',
@@ -100,14 +100,14 @@ Example .env file:
     SQS_SECRET=1a23bc/deFgHijKl4mNOp5qrS6TUVwXyz7ABCDef
     SQS_PREFIX=https://sqs.us-east-2.amazonaws.com/123456789012
 
-If you'd like this to be the default connection, also set `QUEUE_DRIVER=sqs-raw` in the `.env` file.
+If you'd like this to be the default connection, also set `QUEUE_DRIVER=sqs-plain` in the `.env` file.
 
 #### Laravel 4
 
 Open `app/config/queue.php` and add the following entry to the `connections` array:
 
-    'sqs-raw' => array(
-        'driver' => 'sqs-raw',
+    'sqs-plain' => array(
+        'driver' => 'sqs-plain',
         'key'    => 'your-public-key',   // ex: ABCDEFGHIJKLMNOPQRST
         'secret' => 'your-secret-key',   // ex: 1a23bc/deFgHijKl4mNOp5qrS6TUVwXyz7ABCDef
         'queue'  => 'your-queue-url',    // ex: https://sqs.us-east-2.amazonaws.com/123456789012/queuename.fifo
@@ -116,7 +116,7 @@ Open `app/config/queue.php` and add the following entry to the `connections` arr
         'deduplicator' => 'unique',
     ),
 
-If you'd like this to be the default connection, also update the `'default'` key to `'sqs-raw'`.
+If you'd like this to be the default connection, also update the `'default'` key to `'sqs-plain'`.
 
 #### Capsule
 
@@ -129,7 +129,7 @@ use MarsBerrys\LaravelSqsPlainQueue\LaravelSqsPlainQueueServiceProvider;
 $queue = new Queue;
 
 $queue->addConnection([
-    'driver' => 'sqs-raw',
+    'driver' => 'sqs-plain',
     'key'    => 'your-public-key',   // ex: ABCDEFGHIJKLMNOPQRST
     'secret' => 'your-secret-key',   // ex: 1a23bc/deFgHijKl4mNOp5qrS6TUVwXyz7ABCDef
     /**
@@ -140,7 +140,7 @@ $queue->addConnection([
     'region' => 'your-queue-region', // ex: us-east-2
     'group' => 'default',
     'deduplicator' => 'unique',
-], 'sqs-raw');
+], 'sqs-plain');
 
 // Make this Capsule instance available globally via static methods... (optional)
 $queue->setAsGlobal();
@@ -239,14 +239,14 @@ dispatch(
 
 The deduplicators work by generating a deduplication id that is sent to the queue. If two messages generate the same deduplication id, the second message is considered a duplicate, and the message will not be delivered if it is within the 5 minute deduplication interval.
 
-If you have some custom logic that needs to be used to generate the deduplication id, you can register your own custom deduplicator. The deduplicators are stored in the IoC container with the prefix `queue.sqs-raw.deduplicator`. So, for example, the `unique` deduplicator is aliased to `queue.sqs-raw.deduplicator.unique`.
+If you have some custom logic that needs to be used to generate the deduplication id, you can register your own custom deduplicator. The deduplicators are stored in the IoC container with the prefix `queue.sqs-plain.deduplicator`. So, for example, the `unique` deduplicator is aliased to `queue.sqs-plain.deduplicator.unique`.
 
 Custom deduplicators are created by registering a new prefixed alias in the IoC. This alias should resolve to a new object instance that implements the `MarsBerrys\LaravelSqsPlainQueue\Contracts\Queue\Deduplicator` contract. You can either define a new class that implements this contract, or you can create a new `MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Callback` instance, which takes a `Closure` that performs the deduplication logic. The defined `Closure` should take two parameters: `$payload` and `$queue`, where `$payload` is the `json_encoded()` message to send to the queue, and `$queue` is the name of the queue to which the message is being sent. The generated id must not be more than 128 characters, and can contain alphanumeric characters and punctuation (``!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~``).
 
 So, for example, if you wanted to create a `random` deduplicator that would randomly select some jobs to be duplicates, you could add the following line in the `register()` method of your `AppServiceProvider`:
 
 ``` php
-$this->app->bind('queue.sqs-raw.deduplicator.random', function ($app) {
+$this->app->bind('queue.sqs-plain.deduplicator.random', function ($app) {
     return new \MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
         // Return the deduplication id generated for messages. Randomly 0 or 1.
         return mt_rand(0,1);
@@ -274,7 +274,7 @@ class Random implements Deduplicator
 And you could register that class in your `AppServiceProvider` like this:
 
 ``` php
-$this->app->bind('queue.sqs-raw.deduplicator.random', App\Deduplicators\Random::class);
+$this->app->bind('queue.sqs-plain.deduplicator.random', App\Deduplicators\Random::class);
 ```
 
 With this alias registered, you could update the `deduplicator` key in your configuration to use the value `random`, or you could set the deduplicator on individual jobs by calling `withDeduplicator('random')` on the job.

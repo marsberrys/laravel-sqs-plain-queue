@@ -13,28 +13,28 @@ class ServiceProviderTest extends TestCase
 {
     public function test_sqs_fifo_driver_is_registered_with_capsule()
     {
-        $connector = $this->callRestrictedMethod($this->queue->getQueueManager(), 'getConnector', ['sqs-raw']);
+        $connector = $this->callRestrictedMethod($this->queue->getQueueManager(), 'getConnector', ['sqs-plain']);
 
         $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }
 
     public function test_unique_deduplicator_is_registered_with_capsule()
     {
-        $deduplicator = $this->app->make('queue.sqs-raw.deduplicator.unique');
+        $deduplicator = $this->app->make('queue.sqs-plain.deduplicator.unique');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
 
     public function test_content_deduplicator_is_registered_with_capsule()
     {
-        $deduplicator = $this->app->make('queue.sqs-raw.deduplicator.content');
+        $deduplicator = $this->app->make('queue.sqs-plain.deduplicator.content');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
 
     public function test_sqs_deduplicator_is_registered_with_capsule()
     {
-        $deduplicator = $this->app->make('queue.sqs-raw.deduplicator.sqs');
+        $deduplicator = $this->app->make('queue.sqs-plain.deduplicator.sqs');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
@@ -43,7 +43,7 @@ class ServiceProviderTest extends TestCase
     {
         $container = $this->setup_laravel_container();
 
-        $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-raw']);
+        $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-plain']);
 
         $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }
@@ -52,7 +52,7 @@ class ServiceProviderTest extends TestCase
     {
         $container = $this->setup_laravel_container();
 
-        $deduplicator = $container->make('queue.sqs-raw.deduplicator.unique');
+        $deduplicator = $container->make('queue.sqs-plain.deduplicator.unique');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
@@ -61,7 +61,7 @@ class ServiceProviderTest extends TestCase
     {
         $container = $this->setup_laravel_container();
 
-        $deduplicator = $container->make('queue.sqs-raw.deduplicator.content');
+        $deduplicator = $container->make('queue.sqs-plain.deduplicator.content');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
@@ -70,7 +70,7 @@ class ServiceProviderTest extends TestCase
     {
         $container = $this->setup_laravel_container();
 
-        $deduplicator = $container->make('queue.sqs-raw.deduplicator.sqs');
+        $deduplicator = $container->make('queue.sqs-plain.deduplicator.sqs');
 
         $this->assertInstanceOf(Deduplicator::class, $deduplicator);
     }
@@ -83,7 +83,7 @@ class ServiceProviderTest extends TestCase
         (new LaravelSqsPlainQueueServiceProvider($container))->register();
         $this->callRestrictedMethod(new QueueServiceProvider($container), 'registerManager');
 
-        $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-raw']);
+        $connector = $this->callRestrictedMethod($container['queue'], 'getConnector', ['sqs-plain']);
 
         $this->assertInstanceOf(SqsPlainConnector::class, $connector);
     }

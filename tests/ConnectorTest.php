@@ -20,7 +20,7 @@ class ConnectorTest extends TestCase
 
     public function test_sqs_fifo_driver_throws_exception_with_invalid_queue_name()
     {
-        $config = ['driver' => 'sqs-raw', 'queue' => 'test'];
+        $config = ['driver' => 'sqs-plain', 'queue' => 'test'];
         $connector = new SqsPlainConnector();
 
         $this->setExpectedException(InvalidArgumentException::class);

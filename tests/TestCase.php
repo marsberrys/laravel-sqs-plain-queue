@@ -128,7 +128,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $queue->addConnection([
-            'driver' => 'sqs-raw',
+            'driver' => 'sqs-plain',
             'key' => getenv('SQS_KEY'),
             'secret' => getenv('SQS_SECRET'),
             'prefix' => getenv('SQS_PREFIX'),
@@ -136,16 +136,16 @@ class TestCase extends PHPUnit_Framework_TestCase
             'region' => getenv('SQS_REGION') ?: '',
             'group' => 'default',
             'deduplicator' => 'unique',
-        ], 'sqs-raw');
+        ], 'sqs-plain');
 
         $queue->addConnection([
-            'driver' => 'sqs-raw',
+            'driver' => 'sqs-plain',
             'prefix' => getenv('SQS_PREFIX'),
             'queue' => $queueName,
             'region' => getenv('SQS_REGION') ?: '',
             'group' => 'default',
             'deduplicator' => 'unique',
-        ], 'sqs-raw-no-credentials');
+        ], 'sqs-plain-no-credentials');
     }
 
     /**

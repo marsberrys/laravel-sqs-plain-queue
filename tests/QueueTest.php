@@ -65,7 +65,7 @@ class QueueTest extends TestCase
         $job = new Job();
         $job->withDeduplicator($deduplication);
         $closure = function ($message) use ($deduplication) {
-            $deduplicator = $this->app->make('queue.sqs-raw.deduplicator.'.$deduplication);
+            $deduplicator = $this->app->make('queue.sqs-plain.deduplicator.'.$deduplication);
             $deduplicationId = $deduplicator->generate($message['MessageBody'], null);
             if (!array_key_exists('MessageDeduplicationId', $message) || $deduplicationId != $message['MessageDeduplicationId']) {
                 return false;
@@ -281,7 +281,7 @@ class QueueTest extends TestCase
 
     public function test_push_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-raw';
+        $connection = 'sqs-plain';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         $result = new Result(['MessageId' => '1234']);
@@ -298,7 +298,7 @@ class QueueTest extends TestCase
 
     public function test_push_standard_job_to_fifo_queue_returns_id()
     {
-        $connection = 'sqs-raw';
+        $connection = 'sqs-plain';
         $config = $this->app['config']["queue.connections.{$connection}"];
 
         $result = new Result(['MessageId' => '1234']);
@@ -315,7 +315,7 @@ class QueueTest extends TestCase
 
     protected function bind_custom_deduplicator()
     {
-        $this->app->bind('queue.sqs-raw.deduplicator.custom', function () {
+        $this->app->bind('queue.sqs-plain.deduplicator.custom', function () {
             return new \MarsBerrys\LaravelSqsPlainQueue\Queue\Deduplicators\Callback(function ($payload, $queue) {
                 return 'custom';
             });
