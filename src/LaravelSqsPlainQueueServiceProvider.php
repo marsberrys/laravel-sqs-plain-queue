@@ -68,6 +68,9 @@ class LaravelSqsPlainQueueServiceProvider extends ServiceProvider
      */
     public function registerConnectors($manager)
     {
+        $manager->extend('sqs-raw', function () {
+            return new SqsPlainConnector();
+        });
         $manager->extend('sqs-plain', function () {
             return new SqsPlainConnector();
         });
